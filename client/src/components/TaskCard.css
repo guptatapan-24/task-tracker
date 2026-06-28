@@ -1,0 +1,137 @@
+.task-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.task-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.task-card:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.task-card:hover::before {
+  opacity: 1;
+}
+
+/* Done state — slightly dimmed */
+.task-card--done {
+  opacity: 0.65;
+}
+
+.task-card--done .task-card__title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* Overdue state — red accent */
+.task-card--overdue::before {
+  background: linear-gradient(90deg, #ef4444, #f87171);
+  opacity: 1;
+}
+
+.task-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.task-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.4;
+  flex: 1;
+  word-break: break-word;
+}
+
+.task-card__badges {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.task-card__description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 0.75rem;
+  word-break: break-word;
+}
+
+.task-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.task-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.task-card__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.task-card__date--overdue {
+  color: var(--status-overdue);
+}
+
+.task-card__overdue-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--status-overdue);
+  letter-spacing: 0.04em;
+}
+
+.task-card__actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+/* Mobile: stack badges below title */
+@media (max-width: 480px) {
+  .task-card__header {
+    flex-direction: column;
+  }
+  .task-card__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .task-card__actions {
+    width: 100%;
+  }
+  .task-card__actions .btn {
+    flex: 1;
+  }
+}
