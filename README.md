@@ -85,7 +85,7 @@ task-tracker/
 ### 1. Clone the Repository
 
 ```bash
-git clone <repo-url>
+git clone https://www.github.com/guptatapan-24/task-tracker
 cd task-tracker
 ```
 
