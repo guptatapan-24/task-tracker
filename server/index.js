@@ -12,6 +12,11 @@ const PORT = process.env.PORT || 5000;
 
 // Security & parsing middleware
 app.use(helmet());
+app.use(cors({
+  origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
 app.use(express.json());
 
 // Health check endpoint
