@@ -285,12 +285,5 @@ Response: `200 OK` or `404 Not Found`
 |----------|------------------------------------------------------|--------|
 | Frontend | `https://task-tracker-bay-iota.vercel.app`           | ✅     |
 | Backend  | `https://task-tracker-srx6.onrender.com`             | ✅     |
-| Health   | `https://task-tracker-srx6.onrender.com/api/health`  | ✅     |
-
-> **After deploying**, update the URLs above and verify:
-> 1. `GET /api/health` returns `{ "status": "ok" }`
-> 2. Frontend loads without console errors
-> 3. All CRUD operations work end-to-end across the live URLs
-> 4. CORS allows the frontend origin (no blocked requests in Network tab)
 
 ---
