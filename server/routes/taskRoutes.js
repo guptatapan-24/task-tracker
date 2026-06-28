@@ -4,8 +4,9 @@ const {
   getTasks,
   getTask,
   createTask,
+  updateTask,
 } = require('../controllers/taskController');
-const { validate, createTaskSchema } = require('../middleware/validate');
+const { validate, createTaskSchema, updateTaskSchema } = require('../middleware/validate');
 
 // GET /api/tasks - list all tasks
 router.get('/', getTasks);
@@ -16,5 +17,9 @@ router.get('/:id', getTask);
 // POST /api/tasks - create new task
 router.post('/', validate(createTaskSchema), createTask);
 
+// PUT /api/tasks/:id - update task
+router.put('/:id', validate(updateTaskSchema), updateTask);
+
 module.exports = router;
+
 
