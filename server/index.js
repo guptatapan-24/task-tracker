@@ -16,15 +16,22 @@ app.use(helmet());
 // CORS — supports comma-separated origins in CLIENT_ORIGIN for flexibility
 const allowedOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:5173')
   .split(',')
-  .map((o) => o.trim());
+  .map((o) => o.trim().replace(/\/$/, '')); // Remove trailing slashes
 
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (e.g. mobile apps, curl, health checks)
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin) {
+      return callback(null, true);
+    }
+    
+    const cleanedOrigin = origin.trim().replace(/\/$/, '');
+    if (allowedOrigins.includes(cleanedOrigin)) {
       callback(null, true);
     } else {
-      callback(new Error(`CORS: origin ${origin} not allowed`));
+      // Log rejected origin to server logs for debugging
+      console.warn(`[CORS Blocked] Origin: ${origin}. Allowed: ${allowedOrigins.join(', ')}`);
+      callback(null, false);
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
