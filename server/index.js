@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const connectDB = require('./config/db');
 const taskRoutes = require('./routes/taskRoutes');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,6 +22,8 @@ app.get('/api/health', (req, res) => {
 // API routes
 app.use('/api/tasks', taskRoutes);
 
+// Centralized error handling — must be after routes
+app.use(errorHandler);
 
 // Connect to DB then start server
 connectDB().then(() => {
