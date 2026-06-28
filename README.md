@@ -281,10 +281,17 @@ Response: `200 OK` or `404 Not Found`
 
 ## 🔗 Live Deployment
 
-| Service  | URL                                      |
-|----------|------------------------------------------|
-| Frontend | _Deploy and update this URL_             |
-| Backend  | _Deploy and update this URL_             |
+| Service  | URL                                                  | Status |
+|----------|------------------------------------------------------|--------|
+| Frontend | `https://your-app.vercel.app`                        | 🔲     |
+| Backend  | `https://your-api.onrender.com`                      | 🔲     |
+| Health   | `https://your-api.onrender.com/api/health`           | 🔲     |
+
+> **After deploying**, update the URLs above and verify:
+> 1. `GET /api/health` returns `{ "status": "ok" }`
+> 2. Frontend loads without console errors
+> 3. All CRUD operations work end-to-end across the live URLs
+> 4. CORS allows the frontend origin (no blocked requests in Network tab)
 
 ---
 
