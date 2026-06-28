@@ -5,6 +5,7 @@ const {
   getTask,
   createTask,
   updateTask,
+  deleteTask,
 } = require('../controllers/taskController');
 const { validate, createTaskSchema, updateTaskSchema } = require('../middleware/validate');
 
@@ -20,6 +21,10 @@ router.post('/', validate(createTaskSchema), createTask);
 // PUT /api/tasks/:id - update task
 router.put('/:id', validate(updateTaskSchema), updateTask);
 
+// DELETE /api/tasks/:id - delete task
+router.delete('/:id', deleteTask);
+
 module.exports = router;
+
 
 
