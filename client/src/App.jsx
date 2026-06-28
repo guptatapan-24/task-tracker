@@ -4,6 +4,7 @@ import { useToast } from './context/ToastContext';
 import { Modal, Button, Spinner } from './components/ui';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
+import FilterBar from './components/FilterBar';
 import './App.css';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [filters, setFilters] = useState({ status: '', priority: '', search: '', sort: '' });
 
   const { addToast } = useToast();
 
@@ -44,7 +46,7 @@ function App() {
       await createTask(taskData);
       addToast('Task created successfully!', 'success');
       setIsModalOpen(false);
-      fetchTasks();
+      fetchTasks(filters);
     } catch (err) {
       const message = err.response?.data?.message || 'Failed to create task';
       addToast(message, 'error');
@@ -61,7 +63,7 @@ function App() {
       addToast('Task updated successfully!', 'success');
       setIsModalOpen(false);
       setEditingTask(null);
-      fetchTasks();
+      fetchTasks(filters);
     } catch (err) {
       const message = err.response?.data?.message || 'Failed to update task';
       addToast(message, 'error');
@@ -76,7 +78,7 @@ function App() {
     try {
       await deleteTask(id);
       addToast('Task deleted', 'success');
-      fetchTasks();
+      fetchTasks(filters);
     } catch (err) {
       const message = err.response?.data?.message || 'Failed to delete task';
       addToast(message, 'error');
@@ -131,7 +133,13 @@ function App() {
       </header>
 
       <main className="app__main">
-        {/* FilterBar will be added in commit 22 */}
+        <FilterBar
+          filters={filters}
+          onFilterChange={(newFilters) => {
+            setFilters(newFilters);
+            fetchTasks(newFilters);
+          }}
+        />
 
         {loading ? (
           <Spinner size="lg" />
