@@ -51,6 +51,11 @@ select.input-group__field {
   padding-right: 2rem;
 }
 
+select.input-group__field option {
+  background-color: #0f0f1e; /* Matches dark theme card background */
+  color: #f0f0f5; /* Light text color */
+}
+
 /* Error state */
 .input-group--error .input-group__field {
   border-color: var(--status-overdue);

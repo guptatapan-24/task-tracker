@@ -283,9 +283,9 @@ Response: `200 OK` or `404 Not Found`
 
 | Service  | URL                                                  | Status |
 |----------|------------------------------------------------------|--------|
-| Frontend | `https://your-app.vercel.app`                        | 🔲     |
-| Backend  | `https://your-api.onrender.com`                      | 🔲     |
-| Health   | `https://your-api.onrender.com/api/health`           | 🔲     |
+| Frontend | `https://task-tracker-bay-iota.vercel.app`           | ✅     |
+| Backend  | `https://task-tracker-srx6.onrender.com`             | ✅     |
+| Health   | `https://task-tracker-srx6.onrender.com/api/health`  | ✅     |
 
 > **After deploying**, update the URLs above and verify:
 > 1. `GET /api/health` returns `{ "status": "ok" }`
