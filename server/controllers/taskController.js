@@ -3,11 +3,47 @@ const Task = require('../models/Task');
 
 /**
  * GET /api/tasks
- * List all tasks. Supports query params: status, priority, search, sort.
+ * List all tasks with optional filtering, search, and sorting.
+ * Query params:
+ *   status   - filter by status (todo, in-progress, done)
+ *   priority - filter by priority (low, medium, high)
+ *   search   - case-insensitive search on title
+ *   sort     - sort field: dueDate, -dueDate, priority, -priority, createdAt, -createdAt
  */
 const getTasks = async (req, res, next) => {
   try {
-    const tasks = await Task.find().sort({ createdAt: -1 });
+    const { status, priority, search, sort } = req.query;
+    const filter = {};
+
+    // Filter by status
+    if (status && ['todo', 'in-progress', 'done'].includes(status)) {
+      filter.status = status;
+    }
+
+    // Filter by priority
+    if (priority && ['low', 'medium', 'high'].includes(priority)) {
+      filter.priority = priority;
+    }
+
+    // Search by title (case-insensitive partial match)
+    if (search && search.trim()) {
+      filter.title = { $regex: search.trim(), $options: 'i' };
+    }
+
+    // Build sort object — prefix with "-" for descending
+    let sortObj = { createdAt: -1 }; // default: newest first
+    if (sort) {
+      const priorityOrder = { high: 3, medium: 2, low: 1 };
+
+      if (sort === 'dueDate') sortObj = { dueDate: 1 };
+      else if (sort === '-dueDate') sortObj = { dueDate: -1 };
+      else if (sort === 'priority') sortObj = { priority: 1 };
+      else if (sort === '-priority') sortObj = { priority: -1 };
+      else if (sort === 'createdAt') sortObj = { createdAt: 1 };
+      else if (sort === '-createdAt') sortObj = { createdAt: -1 };
+    }
+
+    const tasks = await Task.find(filter).sort(sortObj);
     res.status(200).json({ success: true, count: tasks.length, data: tasks });
   } catch (error) {
     next(error);
