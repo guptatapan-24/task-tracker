@@ -294,7 +294,3 @@ Response: `200 OK` or `404 Not Found`
 > 4. CORS allows the frontend origin (no blocked requests in Network tab)
 
 ---
-
-## 📝 License
-
-MIT
